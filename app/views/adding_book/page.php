@@ -9,8 +9,8 @@
     
 </head>
 <body>
-    <form id="addForm" 
-    method="GET" title="Adding Book" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+    <form id="myForm" 
+    >
         <label for="isbn"> ISBN of the book: </label>
         <input id="isbn" name="isbn" type="text" required> <br>
 
@@ -29,15 +29,25 @@
         <button type="submit">Submit</button>
     </form>
     <script>
-        document.getElementById("addForm").addEventListener("submit",function(event){
+        document.getElementById("myForm").addEventListener("submit",function(event){
             event.preventDefault();
-            let formData=new FormData(this);
+      
+            let formData = new FormData(this);
+    let jsonObject = {};
+    
+    formData.forEach((value, key) => {
+        jsonObject[key] = value;
+    });
 
-            let xhr=XMLHttpRequest();
-            xhr.open("POST",`index.php?form=${form}`,true);
+    // Wrap the form data inside another object with key "form"
+    let requestBody = JSON.stringify({ addForm: jsonObject });
+
+            let xhr=new XMLHttpRequest();
+            xhr.open("POST",'index.php',true);
             xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             xhr.onreadystatechange=function(){
-                if(xhr.readyState==4&&xhr.stat){
+                if(xhr.readyState==4&&xhr.status==200){
+                    console.log(xhr.responseText);
                     let response = JSON.parse(xhr.responseText);
                     if(response["message"]=="success"){
                         alert("added success");
@@ -51,7 +61,7 @@
             }
 
         }
-        xhr.send(formData);
+        xhr.send(requestBody);
     })
     </script>
 </body>

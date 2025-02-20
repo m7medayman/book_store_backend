@@ -41,21 +41,20 @@ class DbHelper{
         } catch (PDOException $e) {
             //throw $th;
             
-            echo "<script>alert('SQL Error: " . addslashes($e->getMessage()) . "');</script>";
+
             throw $e;
         }
 
     }
-    public function query(string $query, string $table_name){
+    public function query(string $query) {
         try {
-            //code...
-            $stmt= $this->dbh->prepare($query);
+            $stmt = $this->dbh->prepare($query);
             $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch as an associative array
+            return $data; // Return the fetched data
         } catch (\Throwable $th) {
-            //throw $th;
-            echo "<script>alert('SQL Error: " . addslashes($th->getMessage()) . "');</script>";
             throw $th;
         }
-}
+    }
 }
 ?>

@@ -12,12 +12,16 @@ class Book_model {
         $book= array(
             "isbn"=>$isbn,
             "title"=>$title,
-            "stock"=>$stock,
             "price"=>$price,
             "publication_year"=>$publication
         );
         $this ->db->add_query($book,self::table_name);
     
+    }
+    public function fetchAllBooks(){
+        $books= $this->db->query("SELECT * FROM books ");
+        return $books;
+
     }
 }
 ?>
