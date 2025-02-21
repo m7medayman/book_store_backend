@@ -23,6 +23,23 @@ echo json_encode($response);
         echo json_encode(array("message"=> $th->getMessage()));
     }
 }
+public function deleteBook($isbn){
+    try {
+        //code...
+       $rowNum= $this->modle->deleteBook($isbn);
+        $response = [
+            "message" => "success",
+            "row" => $rowNum
+        ];
+        header("Content-Type: application/json");
+        echo json_encode($response);
+
+    } catch (\Throwable $th) {
+        //throw $th;
+        // header("Content-Type: application/json");
+        echo json_encode(array("message"=> $th->getMessage()));
+    }
+}
 }
 
 ?>

@@ -41,7 +41,6 @@ function goToAddPage(){
             let response = JSON.parse(xhr.responseText);
             
             if (response["message"] == "success") {
-                alert("Added successfully");
                 let books = response["books"]; // JSON of books list 
                 let viewSection = document.getElementById("view_section");
 
@@ -51,27 +50,24 @@ function goToAddPage(){
                 for (let book of books) {
                     // Create a new book container
                     let bookDiv = document.createElement("div");
-                    bookDiv.innerHTML = `ISBN: ${book["isbn"]} `;
+                bookDiv.innerHTML= `
+            <p>
+    <span class="sp">ISBN: ${book.isbn}</span>
+    <span class="sp">Title: ${book.title}</span>
+    <span class="sp">Price: ${book.price}</span>
+    <span class="sp">Stock: ${book.stock}</span>
+    <span class="sp">Publish year: ${book.publication_year}</span>
+</p>
 
-                    // Create Edit Button
-                    let editBtn = document.createElement("button");
-                    editBtn.textContent = "Edit";
-                    editBtn.onclick = function () {
-                        editBook(book["isbn"]);
-                    };
+<div class="button-container">
+    <button class="edit-btn" data-book='${JSON.stringify(book)}' onclick='editBook(this)'>Edit</button>
+    <button class="delete-btn" onclick="deleteBook('${book.isbn}')">Delete</button>
+</div>
 
-                    // Create Delete Button
-                    let deleteBtn = document.createElement("button");
-                    deleteBtn.textContent = "Delete";
-                    deleteBtn.onclick = function () {
-                        deleteBook(book["isbn"]);
-                    };
-
-                    // Append buttons to the book div
-                    bookDiv.appendChild(editBtn);
-                    bookDiv.appendChild(deleteBtn);
+<hr>`;
 
                     // Append book div to the view section
+                    
                     viewSection.appendChild(bookDiv);
                 }
             } else {
@@ -87,14 +83,36 @@ function goToAddPage(){
 window.onload=getAllBooks();
 
 // Example functions for editing and deleting books
-function editBook(isbn) {
-    alert(`Edit book with ISBN: ${isbn}`);
-    // Implement edit functionality here
+function editBook(button) {
+    let book = JSON.parse(button.getAttribute("data-book"));
+    let encodedBook = encodeURIComponent(JSON.stringify(book));
+    console.log(book);
+    console.log(encodedBook);
+    window.location.href = `index.php?page=update_page&book=${encodedBook}`;
 }
 
 function deleteBook(isbn) {
-    alert(`Delete book with ISBN: ${isbn}`);
     // Implement delete functionality here
+    console.log("start deleting");
+    let requestBody = JSON.stringify({ delete_isbn: isbn });
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", 'index.php', true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+            let response = JSON.parse(xhr.responseText);
+            if (response["message"] == "success") {
+                alert("book deleted");
+                getAllBooks()
+        }else {
+                let message = response["message"] ?? "There is no message in the response";
+                alert(`${message}`);
+                console.log(response);
+            }
+    }
+}
+xhr.send(requestBody);
 }
 
 </script>

@@ -29,7 +29,7 @@ button {
 
 div{
     position: relative;
-    background-color: lightblue;
+
     
     /* justify-content: center;display: flex; */
     display: block;
@@ -41,3 +41,49 @@ button:hover {
 #addButton{position: absolute;
     top: 50%; /* Move 50px from the top */
     left: 50%;}
+/* Ensure spans are on the same line with equal spacing */
+p {
+    display: flex;
+    justify-content: space-between; /* Distributes spans evenly */
+    gap: 5px; /* Adjust space between spans */
+    flex-wrap: wrap; /* Prevents overflow issues */
+}
+
+.sp {
+    flex: 1; /* Ensures equal spacing for each span */
+    text-align: center;
+    font-size: 30px;
+    /* Centers text inside each span */
+}
+
+/* Button container to keep buttons on the same line */
+.button-container {
+    display: flex;
+    position: relative;
+    left: 75%;
+
+    gap: 10px; /* Adjusts space between buttons */
+    margin-top: 5px;
+}
+
+/* Button styling */
+.edit-btn, .delete-btn {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-btn {
+    position: relative;
+   /* Move 50px from the top */
+    background-color: #007bff;
+    color: white;
+}
+
+.delete-btn {
+    position: relative;
+    /* Move 50px from the top */
+
+    background-color: #dc3545;
+    color: white;
+}

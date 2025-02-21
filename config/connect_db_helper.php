@@ -50,11 +50,37 @@ class DbHelper{
         try {
             $stmt = $this->dbh->prepare($query);
             $stmt->execute();
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch as an associative array
-            return $data; // Return the fetched data
+    
+            // Check if the query was a DELETE, UPDATE, or INSERT
+            if (preg_match('/^\s*(DELETE|UPDATE|INSERT)\s/i', $query)) {
+                return $stmt->rowCount(); // Return the number of affected rows
+            }
+    
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Return fetched data for SELECT queries
         } catch (\Throwable $th) {
             throw $th;
         }
     }
+    // public function query_() {
+    //     try {
+    //         //code...
+    //         // $columns=implode(",",array_keys($query_list));
+    //         // $placeholders=":".implode(", :",array_keys($query_list)); // will be the same of names but with ":" before the name
+    //     $q=array();           
+    //         foreach() 
+    //         $sql="INSERT INTO $table_name ($columns) VALUES ($placeholders)";
+    //         $stmt = $this->dbh->prepare($sql);
+    //       foreach ($query_list as $key => $value) {
+    //         $stmt->bindValue(":".$key,$value);
+    //       }
+    //       $stmt->execute();
+    //     } catch (PDOException $e) {
+    //         //throw $th;
+            
+
+    //         throw $e;
+    //     }
+
+    // }
 }
 ?>

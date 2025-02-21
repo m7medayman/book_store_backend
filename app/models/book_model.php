@@ -13,7 +13,8 @@ class Book_model {
             "isbn"=>$isbn,
             "title"=>$title,
             "price"=>$price,
-            "publication_year"=>$publication
+            "publication_year"=>$publication,
+            "stock"=>$stock
         );
         $this ->db->add_query($book,self::table_name);
     
@@ -23,5 +24,15 @@ class Book_model {
         return $books;
 
     }
+    public function deleteBook(string $isbn){
+        $n= $this->db->query("DELETE FROM books WHERE isbn='$isbn'");
+        return $n;
+    }
+    public function updateBook(string $isbn,string $title,int $stock ,float $price, int $publication){
+        $update= $this->db->query("UPDATE books SET title='$title', price=$price, publication_year=$publication,stock=$stock WHERE isbn='$isbn'
+        ");
+        return $update;
+    }
+    
 }
 ?>
