@@ -23,7 +23,7 @@ private $model;
       }
       else{
          header("Content-Type: application/json");
-         echo json_encode(array("message"=>"something went wrong "));
+         echo json_encode(array("message"=>"user or password is incorrect"));
       }
    } catch (\Throwable $th) {
       //throw $th;
@@ -72,6 +72,8 @@ public function getUser(){
  }
 private function clearUser(){
     unset($_SESSION["user"]);
+    session_destroy(); 
+    session_unset();
  }
 // public function isAdmin(){
 //     return $this->isLoggedIn() && $this->getUser()["role"] == "admin";

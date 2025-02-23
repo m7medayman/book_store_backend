@@ -87,3 +87,15 @@ p {
     background-color: #dc3545;
     color: white;
 }
+.logout-link {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    color: grey;
+    text-decoration: none;
+    font-size: 24px;
+  }
+
+  .logout-link:hover {
+    color: green;
+  }

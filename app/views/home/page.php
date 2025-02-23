@@ -10,6 +10,8 @@ home
         <H1>
             home page
         </H1>
+        <a href="#" class="logout-link" onclick="logout()">Logout</a>
+
         <br>
         <hr>
         <div id="view_section"></div>
@@ -22,6 +24,20 @@ add book
         </button>
 </div>
 <script>
+    function logout(){
+        let requestBody = JSON.stringify({ logout: true });
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", 'index.php', true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            window.location.href = "index.php?page=login_page"; // Redirect user after logout
+        }
+    };
+    xhr.send(requestBody);
+    
+
+    }
     
 function goToAddPage(){
 

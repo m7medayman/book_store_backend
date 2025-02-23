@@ -29,7 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $authController->login($user_data["user"],$user_data["password"]);
         exit;    
     }
-    
+    if(isset($data["logout"])){
+        $authController->logout();
+        // header("Location: index.php?page=login_page");
+        exit;
+    }
 
     if (isset($data["updateForm"])) {
         $updateController->updateBook($data["updateForm"]);
