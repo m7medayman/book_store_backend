@@ -11,7 +11,7 @@ class DbHelper{
     private string $user;
     private string $password;
     const  dataBase='mysql:host=localhost;dbname=test;charset=utf8mb4';
-    private $dbh;
+    public $dbh;
     public function __construct(
        string $user="root", string $password="" 
     ){
